@@ -1,0 +1,25 @@
+# Build outputs
+**/bin
+**/obj
+
+# Node modules
+**/node_modules
+
+# Git
+**/.git
+
+# IDE
+**/.vs
+**/.vscode
+
+# Frontend build and dependencies
+frontend/dist
+frontend/node_modules
+
+# User-specific files
+*.user
+*.suo
+*.log
+
+# Environment files
+.env

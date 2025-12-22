@@ -1,0 +1,30 @@
+# Build stage
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+WORKDIR /src
+
+# Copy solution and project files first for layer caching
+COPY backend/TekelBayim.sln ./backend/
+COPY backend/src/TekelBayim.Api/TekelBayim.Api.csproj ./backend/src/TekelBayim.Api/
+COPY backend/src/TekelBayim.Application/TekelBayim.Application.csproj ./backend/src/TekelBayim.Application/
+COPY backend/src/TekelBayim.Domain/TekelBayim.Domain.csproj ./backend/src/TekelBayim.Domain/
+COPY backend/src/TekelBayim.Infrastructure/TekelBayim.Infrastructure.csproj ./backend/src/TekelBayim.Infrastructure/
+COPY backend/src/TekelBayim.Shared/TekelBayim.Shared.csproj ./backend/src/TekelBayim.Shared/
+
+# Restore dependencies
+RUN dotnet restore backend/src/TekelBayim.Api/TekelBayim.Api.csproj
+
+# Copy entire backend source
+COPY backend/ ./backend/
+
+# Publish the application
+RUN dotnet publish backend/src/TekelBayim.Api/TekelBayim.Api.csproj -c Release -o /app/publish
+
+# Runtime stage
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
+WORKDIR /app
+
+EXPOSE 8080
+
+COPY --from=build /app/publish .
+
+ENTRYPOINT ["dotnet", "TekelBayim.Api.dll"]

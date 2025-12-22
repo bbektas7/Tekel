@@ -30,16 +30,16 @@ import type {
 // ==================== AUTH ====================
 export const authApi = {
   login: async (payload: LoginPayload): Promise<User> => {
-    const { data } = await api.post("/api/auth/login", payload);
+    const { data } = await api.post("/auth/login", payload);
     return data;
   },
 
   logout: async (): Promise<void> => {
-    await api.post("/api/auth/logout");
+    await api.post("/auth/logout");
   },
 
   me: async (): Promise<User> => {
-    const { data } = await api.get("/api/auth/me");
+    const { data } = await api.get("/auth/me");
     return data;
   },
 };
@@ -47,7 +47,7 @@ export const authApi = {
 // ==================== CATEGORIES ====================
 export const categoriesApi = {
   getAll: async (): Promise<Category[]> => {
-    const { data } = await api.get("/api/categories");
+    const { data } = await api.get("/categories");
     return data;
   },
 };
@@ -55,7 +55,7 @@ export const categoriesApi = {
 // ==================== PRODUCTS ====================
 export const productsApi = {
   getAll: async (params: ProductsQueryParams): Promise<ProductsResponse> => {
-    const { data } = await api.get("/api/products", { params });
+    const { data } = await api.get("/products", { params });
     return data;
   },
 
@@ -69,13 +69,13 @@ export const productsApi = {
 export const adminApi = {
   // Summary
   getSummary: async (): Promise<AdminSummary> => {
-    const { data } = await api.get("/api/admin/summary");
+    const { data } = await api.get("/admin/summary");
     return data;
   },
 
   // Categories CRUD
   createCategory: async (payload: CreateCategoryPayload): Promise<Category> => {
-    const { data } = await api.post("/api/admin/categories", payload);
+    const { data } = await api.post("/admin/categories", payload);
     return data;
   },
 
@@ -95,12 +95,12 @@ export const adminApi = {
   getProducts: async (
     params: ProductsQueryParams
   ): Promise<ProductsResponse> => {
-    const { data } = await api.get("/api/products", { params });
+    const { data } = await api.get("/products", { params });
     return data;
   },
 
   createProduct: async (payload: CreateProductPayload): Promise<Product> => {
-    const { data } = await api.post("/api/admin/products", payload);
+    const { data } = await api.post("/admin/products", payload);
     return data;
   },
 
@@ -127,13 +127,13 @@ export const adminApi = {
   getStockMovements: async (
     params: StockMovementsQueryParams
   ): Promise<StockMovementsResponse> => {
-    const { data } = await api.get("/api/admin/stock-movements", { params });
+    const { data } = await api.get("/admin/stock-movements", { params });
     return data;
   },
 
   // Site Settings
   getSiteSettings: async (): Promise<SiteSettings> => {
-    const { data } = await api.get("/api/admin/site-settings");
+    const { data } = await api.get("/admin/site-settings");
     return data;
   },
 
@@ -141,7 +141,7 @@ export const adminApi = {
     payload: UpdateHeroSlidesPayload
   ): Promise<HeroSlide[]> => {
     const { data } = await api.put(
-      "/api/admin/site-settings/hero-slides",
+      "/admin/site-settings/hero-slides",
       payload
     );
     return data;
@@ -150,24 +150,24 @@ export const adminApi = {
   updateAboutInfo: async (
     payload: UpdateAboutInfoPayload
   ): Promise<AboutInfo> => {
-    const { data } = await api.put("/api/admin/site-settings/about", payload);
+    const { data } = await api.put("/admin/site-settings/about", payload);
     return data;
   },
 
   updateRegions: async (payload: UpdateRegionsPayload): Promise<Region[]> => {
-    const { data } = await api.put("/api/admin/site-settings/regions", payload);
+    const { data } = await api.put("/admin/site-settings/regions", payload);
     return data;
   },
 
   updateContactInfo: async (
     payload: UpdateContactInfoPayload
   ): Promise<ContactInfo> => {
-    const { data } = await api.put("/api/admin/site-settings/contact", payload);
+    const { data } = await api.put("/admin/site-settings/contact", payload);
     return data;
   },
 
   updateFaqs: async (payload: UpdateFaqsPayload): Promise<FaqItem[]> => {
-    const { data } = await api.put("/api/admin/site-settings/faqs", payload);
+    const { data } = await api.put("/admin/site-settings/faqs", payload);
     return data;
   },
 };
@@ -175,32 +175,32 @@ export const adminApi = {
 // ==================== PUBLIC SITE SETTINGS ====================
 export const siteSettingsApi = {
   getAll: async (): Promise<SiteSettings> => {
-    const { data } = await api.get("/api/site-settings");
+    const { data } = await api.get("/site-settings");
     return data;
   },
 
   getHeroSlides: async (): Promise<HeroSlide[]> => {
-    const { data } = await api.get("/api/site-settings/hero-slides");
+    const { data } = await api.get("/site-settings/hero-slides");
     return data;
   },
 
   getAboutInfo: async (): Promise<AboutInfo> => {
-    const { data } = await api.get("/api/site-settings/about");
+    const { data } = await api.get("/site-settings/about");
     return data;
   },
 
   getRegions: async (): Promise<Region[]> => {
-    const { data } = await api.get("/api/site-settings/regions");
+    const { data } = await api.get("/site-settings/regions");
     return data;
   },
 
   getContactInfo: async (): Promise<ContactInfo> => {
-    const { data } = await api.get("/api/site-settings/contact");
+    const { data } = await api.get("/site-settings/contact");
     return data;
   },
 
   getFaqs: async (): Promise<FaqItem[]> => {
-    const { data } = await api.get("/api/site-settings/faqs");
+    const { data } = await api.get("/site-settings/faqs");
     return data;
   },
 };

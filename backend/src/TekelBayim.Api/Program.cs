@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.HttpOverrides;
 using Serilog;
 using Serilog.Events;
 using FastEndpoints;
@@ -68,6 +69,12 @@ try
 
     var app = builder.Build();
 
+    // Forwarded headers for reverse proxy (Caddy)
+    app.UseForwardedHeaders(new ForwardedHeadersOptions
+    {
+        ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+    });
+
     // Global exception handler
     app.UseGlobalExceptionHandler();
 
@@ -90,8 +97,11 @@ try
         c.Endpoints.RoutePrefix = "api";
     });
 
-    // Swagger
-    app.UseSwaggerGen();
+    // Swagger (Development only)
+    if (app.Environment.IsDevelopment())
+    {
+        app.UseSwaggerGen();
+    }
 
     // Seed database
     await DbSeeder.SeedAsync(app.Services);
