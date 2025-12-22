@@ -25,6 +25,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    volumes:
+      - dpkeys:/root/.aspnet/DataProtection-Keys
     networks:
       - tekelnet
     restart: unless-stopped
@@ -62,3 +64,4 @@ volumes:
   pgdata:
   caddy_data:
   caddy_config:
+  dpkeys:
