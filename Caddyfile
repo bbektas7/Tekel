@@ -1,7 +1,6 @@
-{$SITE_ADDRESS} {
+{$SITE_ADDRESS:localhost} {
     encode gzip
 
-    # API requests -> backend (DO NOT strip /api)
     handle /api/* {
         reverse_proxy api:8080
     }
