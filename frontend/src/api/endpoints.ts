@@ -60,7 +60,7 @@ export const productsApi = {
   },
 
   getById: async (id: string): Promise<Product> => {
-    const { data } = await api.get(`/api/products/${id}`);
+    const { data } = await api.get(`/products/${id}`);
     return data;
   },
 };
@@ -83,12 +83,12 @@ export const adminApi = {
     id: string,
     payload: UpdateCategoryPayload
   ): Promise<Category> => {
-    const { data } = await api.put(`/api/admin/categories/${id}`, payload);
+    const { data } = await api.put(`/admin/categories/${id}`, payload);
     return data;
   },
 
   deleteCategory: async (id: string): Promise<void> => {
-    await api.delete(`/api/admin/categories/${id}`);
+    await api.delete(`/admin/categories/${id}`);
   },
 
   // Products CRUD
@@ -108,12 +108,12 @@ export const adminApi = {
     id: string,
     payload: UpdateProductPayload
   ): Promise<Product> => {
-    const { data } = await api.put(`/api/admin/products/${id}`, payload);
+    const { data } = await api.put(`/admin/products/${id}`, payload);
     return data;
   },
 
   deleteProduct: async (id: string): Promise<void> => {
-    await api.delete(`/api/admin/products/${id}`);
+    await api.delete(`/admin/products/${id}`);
   },
 
   // Stock
@@ -121,7 +121,7 @@ export const adminApi = {
     productId: string,
     payload: StockAdjustmentPayload
   ): Promise<void> => {
-    await api.patch(`/api/admin/products/${productId}/stock`, payload);
+    await api.patch(`/admin/products/${productId}/stock`, payload);
   },
 
   getStockMovements: async (
