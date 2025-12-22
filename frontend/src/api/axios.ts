@@ -1,4 +1,8 @@
-import axios, { AxiosResponse, AxiosError, InternalAxiosRequestConfig } from "axios";
+import axios, {
+  AxiosResponse,
+  AxiosError,
+  InternalAxiosRequestConfig,
+} from "axios";
 
 export const api = axios.create({
   baseURL: "/api",

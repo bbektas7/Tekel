@@ -140,10 +140,7 @@ export const adminApi = {
   updateHeroSlides: async (
     payload: UpdateHeroSlidesPayload
   ): Promise<HeroSlide[]> => {
-    const { data } = await api.put(
-      "/admin/site-settings/hero-slides",
-      payload
-    );
+    const { data } = await api.put("/admin/site-settings/hero-slides", payload);
     return data;
   },
 
