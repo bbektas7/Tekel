@@ -4,6 +4,11 @@ services:
     env_file: .env
     volumes:
       - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
     networks:
       - tekelnet
     restart: unless-stopped
@@ -16,9 +21,10 @@ services:
     environment:
       - ASPNETCORE_URLS=http://+:8080
       - ASPNETCORE_ENVIRONMENT=Production
-      - ConnectionStrings__Default=Host=db;Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}
+      - ConnectionStrings__DefaultConnection=Host=db;Port=5432;Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     networks:
       - tekelnet
     restart: unless-stopped
