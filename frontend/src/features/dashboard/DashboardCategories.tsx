@@ -49,12 +49,14 @@ const DashboardCategories: React.FC = () => {
   const [formData, setFormData] = useState<CreateCategoryPayload>({
     name: "",
     description: "",
+    isActive: true,
   });
 
   const resetForm = () => {
     setFormData({
       name: "",
       description: "",
+      isActive: true,
     });
     setEditingCategory(null);
   };
@@ -65,6 +67,7 @@ const DashboardCategories: React.FC = () => {
       setFormData({
         name: category.name,
         description: category.description || "",
+        isActive: category.isActive ?? true,
       });
     } else {
       resetForm();
@@ -135,6 +138,7 @@ const DashboardCategories: React.FC = () => {
                 <TableHead>Kategori Adı</TableHead>
                 <TableHead>Açıklama</TableHead>
                 <TableHead>Ürün Sayısı</TableHead>
+                <TableHead>Durum</TableHead>
                 <TableHead>İşlemler</TableHead>
               </TableRow>
             </TableHeader>
@@ -149,6 +153,11 @@ const DashboardCategories: React.FC = () => {
                   </TableCell>
                   <TableCell>
                     <Badge>{category.productCount ?? 0} ürün</Badge>
+                  </TableCell>
+                  <TableCell>
+                    <Badge $variant={category.isActive ? "success" : "error"}>
+                      {category.isActive ? "Aktif" : "Pasif"}
+                    </Badge>
                   </TableCell>
                   <TableCell>
                     <ActionButtons>
@@ -203,6 +212,23 @@ const DashboardCategories: React.FC = () => {
               rows={3}
               placeholder="Kategori açıklaması..."
             />
+          </FormGroup>
+
+          <FormGroup>
+            <ToggleWrapper>
+              <ToggleLabel>Aktif Durum</ToggleLabel>
+              <ToggleSwitch
+                $isActive={formData.isActive ?? true}
+                onClick={() =>
+                  setFormData({ ...formData, isActive: !formData.isActive })
+                }
+              >
+                <ToggleSlider $isActive={formData.isActive ?? true} />
+              </ToggleSwitch>
+              <ToggleStatus $isActive={formData.isActive ?? true}>
+                {formData.isActive ? "Aktif" : "Pasif"}
+              </ToggleStatus>
+            </ToggleWrapper>
           </FormGroup>
 
           <ModalActions>
@@ -267,6 +293,7 @@ const TableSkeleton: React.FC = () => (
           <TableHead>Kategori Adı</TableHead>
           <TableHead>Açıklama</TableHead>
           <TableHead>Ürün Sayısı</TableHead>
+          <TableHead>Durum</TableHead>
           <TableHead>İşlemler</TableHead>
         </TableRow>
       </TableHeader>
@@ -281,6 +308,9 @@ const TableSkeleton: React.FC = () => (
             </TableCell>
             <TableCell>
               <Skeleton $height="20px" $width="60px" />
+            </TableCell>
+            <TableCell>
+              <Skeleton $height="20px" $width="50px" />
             </TableCell>
             <TableCell>
               <Skeleton $height="20px" $width="60px" />
@@ -337,6 +367,46 @@ const ModalActions = styled.div`
   justify-content: flex-end;
   gap: ${theme.spacing.md};
   margin-top: ${theme.spacing.lg};
+`;
+
+const ToggleWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: ${theme.spacing.md};
+`;
+
+const ToggleLabel = styled.span`
+  font-size: ${theme.typography.sizes.md};
+  color: ${theme.colors.textSecondary};
+`;
+
+const ToggleSwitch = styled.div<{ $isActive: boolean }>`
+  position: relative;
+  width: 50px;
+  height: 26px;
+  background-color: ${(props) =>
+    props.$isActive ? theme.colors.success : theme.colors.border};
+  border-radius: 13px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+`;
+
+const ToggleSlider = styled.div<{ $isActive: boolean }>`
+  position: absolute;
+  top: 3px;
+  left: ${(props) => (props.$isActive ? "27px" : "3px")};
+  width: 20px;
+  height: 20px;
+  background-color: ${theme.colors.textPrimary};
+  border-radius: 50%;
+  transition: left 0.3s ease;
+`;
+
+const ToggleStatus = styled.span<{ $isActive: boolean }>`
+  font-size: ${theme.typography.sizes.sm};
+  font-weight: ${theme.typography.weights.semibold};
+  color: ${(props) =>
+    props.$isActive ? theme.colors.success : theme.colors.textMuted};
 `;
 
 const DeleteConfirmContent = styled.div`

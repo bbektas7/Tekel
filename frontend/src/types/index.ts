@@ -25,6 +25,7 @@ export interface Category {
   description?: string;
   parentId?: string | null;
   productCount?: number;
+  isActive: boolean;
   createdAt?: string;
   updatedAt?: string;
 }
@@ -34,6 +35,7 @@ export interface CreateCategoryPayload {
   slug?: string;
   description?: string;
   parentId?: string | null;
+  isActive?: boolean;
 }
 
 export interface UpdateCategoryPayload extends Partial<CreateCategoryPayload> {}

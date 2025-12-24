@@ -255,7 +255,7 @@ const TekelLandingPage: React.FC = () => {
           <SectionTitle>ÜRÜNLERİMİZ</SectionTitle>
           <AccentLine />
           <ProductGrid>
-            <ProductCard>
+            <ProductCardLink to="/products">
               <ProductIconWrapper>
                 <ProductIcon>🥤</ProductIcon>
               </ProductIconWrapper>
@@ -263,9 +263,9 @@ const TekelLandingPage: React.FC = () => {
               <ProductSubtitle>
                 Klasik içecekler, enerji içecekleri ve daha fazlası.
               </ProductSubtitle>
-            </ProductCard>
+            </ProductCardLink>
 
-            <ProductCard>
+            <ProductCardLink to="/products">
               <ProductIconWrapper>
                 <ProductIcon>🍺</ProductIcon>
               </ProductIconWrapper>
@@ -273,9 +273,9 @@ const TekelLandingPage: React.FC = () => {
               <ProductSubtitle>
                 Bira, şarap, viski ve geniş alkol seçkisi.
               </ProductSubtitle>
-            </ProductCard>
+            </ProductCardLink>
 
-            <ProductCard>
+            <ProductCardLink to="/products">
               <ProductIconWrapper>
                 <ProductIcon>🧀</ProductIcon>
               </ProductIconWrapper>
@@ -283,9 +283,9 @@ const TekelLandingPage: React.FC = () => {
               <ProductSubtitle>
                 Atıştırmalıklar ve meze çeşitleri.
               </ProductSubtitle>
-            </ProductCard>
+            </ProductCardLink>
 
-            <ProductCard>
+            <ProductCardLink to="/products">
               <ProductIconWrapper>
                 <ProductIcon>🥜</ProductIcon>
               </ProductIconWrapper>
@@ -293,7 +293,7 @@ const TekelLandingPage: React.FC = () => {
               <ProductSubtitle>
                 Taze kuruyemişler ve şarküteri ürünleri.
               </ProductSubtitle>
-            </ProductCard>
+            </ProductCardLink>
           </ProductGrid>
         </Container>
       </ProductsSection>
@@ -990,11 +990,27 @@ const ProductCard = styled.div`
   }
 `;
 
+const ProductCardLink = styled(Link)`
+  background-color: #151517;
+  border-radius: 16px;
+  padding: 40px 24px;
+  text-align: center;
+  transition: all 0.3s;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  text-decoration: none;
+  display: block;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+  }
+`;
+
 const ProductIconWrapper = styled.div`
   margin-bottom: 20px;
   transition: transform 0.3s;
 
-  ${ProductCard}:hover & {
+  ${ProductCardLink}:hover & {
     transform: scale(1.1);
   }
 `;

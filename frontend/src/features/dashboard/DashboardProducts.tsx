@@ -406,6 +406,23 @@ const DashboardProducts: React.FC = () => {
             />
           </FormGroup>
 
+          <FormGroup>
+            <ToggleWrapper>
+              <ToggleLabel>Aktif Durum</ToggleLabel>
+              <ToggleSwitch
+                $isActive={formData.isActive ?? true}
+                onClick={() =>
+                  setFormData({ ...formData, isActive: !formData.isActive })
+                }
+              >
+                <ToggleSlider $isActive={formData.isActive ?? true} />
+              </ToggleSwitch>
+              <ToggleStatus $isActive={formData.isActive ?? true}>
+                {formData.isActive ? "Aktif" : "Pasif"}
+              </ToggleStatus>
+            </ToggleWrapper>
+          </FormGroup>
+
           <ModalActions>
             <SecondaryButton type="button" onClick={handleCloseModal}>
               İptal
@@ -584,6 +601,46 @@ const ModalActions = styled.div`
   justify-content: flex-end;
   gap: ${theme.spacing.md};
   margin-top: ${theme.spacing.lg};
+`;
+
+const ToggleWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: ${theme.spacing.md};
+`;
+
+const ToggleLabel = styled.span`
+  font-size: ${theme.typography.sizes.md};
+  color: ${theme.colors.textSecondary};
+`;
+
+const ToggleSwitch = styled.div<{ $isActive: boolean }>`
+  position: relative;
+  width: 50px;
+  height: 26px;
+  background-color: ${(props) =>
+    props.$isActive ? theme.colors.success : theme.colors.border};
+  border-radius: 13px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+`;
+
+const ToggleSlider = styled.div<{ $isActive: boolean }>`
+  position: absolute;
+  top: 3px;
+  left: ${(props) => (props.$isActive ? "27px" : "3px")};
+  width: 20px;
+  height: 20px;
+  background-color: ${theme.colors.textPrimary};
+  border-radius: 50%;
+  transition: left 0.3s ease;
+`;
+
+const ToggleStatus = styled.span<{ $isActive: boolean }>`
+  font-size: ${theme.typography.sizes.sm};
+  font-weight: ${theme.typography.weights.semibold};
+  color: ${(props) =>
+    props.$isActive ? theme.colors.success : theme.colors.textMuted};
 `;
 
 const DeleteConfirmContent = styled.div`

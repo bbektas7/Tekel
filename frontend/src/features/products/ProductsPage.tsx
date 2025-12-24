@@ -8,7 +8,6 @@ import {
   FormInput,
   FormSelect,
   Badge,
-  StockBadge,
   Skeleton,
   EmptyState,
   EmptyStateIcon,
@@ -97,12 +96,6 @@ const ProductsPage: React.FC = () => {
       style: "currency",
       currency: "TRY",
     }).format(price);
-  };
-
-  const getStockText = (quantity: number) => {
-    if (quantity === 0) return "Stokta Yok";
-    if (quantity <= 10) return `Son ${quantity} adet`;
-    return "Stokta";
   };
 
   return (
@@ -223,9 +216,6 @@ const ProductsPage: React.FC = () => {
                         ) : (
                           <PlaceholderImage>🍺</PlaceholderImage>
                         )}
-                        <StockBadge $quantity={product.stockQuantity}>
-                          {getStockText(product.stockQuantity)}
-                        </StockBadge>
                       </ProductImage>
                       <ProductInfo>
                         <ProductName>{product.name}</ProductName>
@@ -522,12 +512,6 @@ const ProductImage = styled.div`
     width: 100%;
     height: 100%;
     object-fit: cover;
-  }
-
-  ${StockBadge} {
-    position: absolute;
-    top: ${theme.spacing.sm};
-    right: ${theme.spacing.sm};
   }
 `;
 
