@@ -43,4 +43,13 @@ public class CategoryRepository : Repository<Category>, ICategoryRepository
             .Include(c => c.Products)
             .FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
     }
+
+    public async Task<List<Category>> GetCategoriesAsync(CancellationToken cancellationToken = default)
+    {
+        return await _dbSet
+            .OrderBy(c => c.SortOrder)
+            .ThenBy(c => c.Name)
+            .AsNoTracking()
+            .ToListAsync(cancellationToken);
+    }
 }

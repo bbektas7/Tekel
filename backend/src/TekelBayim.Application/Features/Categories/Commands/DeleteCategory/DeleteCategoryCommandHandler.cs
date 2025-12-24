@@ -20,15 +20,14 @@ public class DeleteCategoryCommandHandler : IRequestHandler<DeleteCategoryComman
         if (category is null)
             throw new NotFoundException("Category", request.Id);
 
-        // İlişkili ürün veya alt kategori varsa soft delete yap
-        if (category.Products.Any() || category.SubCategories.Any())
-        {
-            category.IsActive = false;
-            await _unitOfWork.SaveChangesAsync(cancellationToken);
-            return true;
-        }
+        // İlişkili ürün varsa silme işlemini engelle
+        if (category.Products.Any())
+            throw new BusinessRuleException("Bu kategoriye bağlı ürünler bulunmaktadır. Önce ürünleri silmeniz veya başka bir kategoriye taşımanız gerekmektedir.");
 
-        // Aksi halde hard delete
+        // Alt kategori varsa silme işlemini engelle
+        if (category.SubCategories.Any())
+            throw new BusinessRuleException("Bu kategoriye bağlı alt kategoriler bulunmaktadır. Önce alt kategorileri silmeniz gerekmektedir.");
+
         await _unitOfWork.Categories.DeleteAsync(category, cancellationToken);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 

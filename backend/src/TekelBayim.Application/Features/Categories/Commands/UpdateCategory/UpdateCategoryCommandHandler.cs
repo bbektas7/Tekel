@@ -53,9 +53,16 @@ public class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategoryComman
             category.Slug = slug;
         }
 
+        // Aktif kategori inactive yapılmaya çalışılıyorsa, altında ürün var mı kontrol et
+        if (category.IsActive && !dto.IsActive)
+        {
+            var categoryWithProducts = await _unitOfWork.Categories.GetWithProductsAsync(request.Id, cancellationToken);
+            if (categoryWithProducts?.Products?.Any() == true)
+                throw new BusinessRuleException("Bu kategorinin altında ürünler bulunmaktadır. Önce ürünleri başka bir kategoriye taşıyın veya silin.", "CATEGORY_HAS_PRODUCTS");
+        }
+
         category.Name = dto.Name;
         category.ParentCategoryId = dto.ParentCategoryId;
-        category.SortOrder = dto.SortOrder;
         category.IsActive = dto.IsActive;
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
